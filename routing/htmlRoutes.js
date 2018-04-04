@@ -12,16 +12,6 @@ module.exports = function(app) {
   // Below code handles when users "visit" a page.
   // In each of the below cases the user is shown an HTML page of content
   // -------------------------------------------------------------------------
-  app.post("/search",function(req,res){
-    console.log("routes"+"form Submited")
-    // console.log(req.body.playid);
-    // var newplaylist={
-    //   playlistid=req.body.playid,
-    //   year=req.body.year
-    // }
-   
-
-  })
 
   app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/index.html"));

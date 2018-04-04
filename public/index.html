@@ -4,7 +4,8 @@
 <head>
   <title>Playlist Updates</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 </head>
 <style>
   body {
@@ -22,7 +23,7 @@
     <h4>This application requires access to your YouTube account. Please
       <a href="#" id="login-link">authorize</a> to continue.</h4>
   </div>
-  <form method="POST" action="/search">
+  <form method="POST" action="/">
     <div id="buttons">
       <div class="input-group">
         <span class="input-group-addon">Title</span>
@@ -66,25 +67,14 @@
       <span id="status">No Videos</span>
     </h5>
   </div>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-  <script src="../server.js"></script>
-  <!-- <script src="playlist_updates.js"></script> -->
-  <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
-  <script>
-    //to send search year val to apiroutes
-    $("#addvideo").on("click", function (event) {
-      event.preventDefault();
-      var search = {
-        year: $("#year").val().trim()
-      }
-    })
 
+  <script>
     var OAUTH2_CLIENT_ID = '144598218649-l78ovdbcde6bc30j11ac8bmjeqtbbuuj.apps.googleusercontent.com';
-    var OAUTH2_SCOPES = [
-      'https://www.googleapis.com/auth/youtube'
-    ];
+    var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
+    console.log(OAUTH2_CLIENT_ID)
     // Upon loading, the Google APIs JS client automatically invokes this callback.
     googleApiClientReady = function () {
+      console.log("i am in googleApiClientReady")
       gapi.auth.init(function () {
         window.setTimeout(checkAuth, 1);
       });
@@ -95,6 +85,7 @@
     // succeeds with no user intervention. Otherwise, it fails and the
     // user interface that prompts for authorization needs to display.
     function checkAuth() {
+      console.log("i am in check auth")
       gapi.auth.authorize({
         client_id: OAUTH2_CLIENT_ID,
         scope: OAUTH2_SCOPES,
@@ -102,14 +93,9 @@
       }, handleAuthResult);
     }
 
-
-    // var youtubeids = [];
-    // const express = require("express");
-    // const app = express();
-
-
     // Handle the result of a gapi.auth.authorize() call.
     function handleAuthResult(authResult) {
+      console.log("i am in handle auth")
       if (authResult && !authResult.error) {
         // Authorization was successful. Hide authorization prompts and show
         // content that should be visible after authorization succeeds.
@@ -120,6 +106,7 @@
         // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
         // client flow. The current function is called when that flow completes.
         $('#login-link').click(function () {
+          alert("i am clicked");
           gapi.auth.authorize({
             client_id: OAUTH2_CLIENT_ID,
             scope: OAUTH2_SCOPES,
@@ -133,6 +120,7 @@
     // are required to use the Google APIs JS client. More info is available at
     // https://developers.google.com/api-client-library/javascript/dev/dev_jscript#loading-the-client-library-and-the-api
     function loadAPIClientInterfaces() {
+      console.log("loadApicall")
       gapi.client.load('youtube', 'v3', function () {
         handleAPILoaded();
       });
@@ -239,6 +227,13 @@
         }, 3000);
       }
     }
+    //to send search year val to apiroutes
+    $("#addvideo").on("click", function (event) {
+      event.preventDefault();
+      var search = {
+        year: $("#year").val().trim()
+      }
+    })
   </script>
 </body>
 
