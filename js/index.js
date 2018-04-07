@@ -1,75 +1,4 @@
-<!Doctype html>
-<html>
-
-<head>
-  <title>Playlist Updates</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-
-</head>
-<style>
-  body {
-    padding: 50px;
-    background-color: aquamarine;
-  }
-</style>
-
-<body>
-  <div>
-    <h1 class="text-center">Upload/Create a Youtube Playlist </h1>
-  </div>
-  </br>
-  <div id="login-container" class="pre-auth">
-    <h4>This application requires access to your YouTube account. Please
-      <a href="#" id="login-link">authorize</a> to continue.</h4>
-  </div>
-  <form method="POST" action="/">
-    <div id="buttons">
-      <div class="input-group">
-        <span class="input-group-addon">Title</span>
-        <input id="Title" type="text" class="form-control" name="title" placeholder="Give me a name..">
-      </div>
-      </br>
-      <div class="input-group">
-        <span class="input-group-addon">Playlist Description</span>
-        <input id="Desciption" class="form-control" name="description" placeholder='Please be Speicific..' type="text" />
-      </div>
-      </br>
-      <button type="button" class="btn btn-primary pull-right" id="playlist-button" disabled onclick="createPlaylist()">Create a new Playlist</button>
-
-      </br>
-      <div class="input-group">
-        <span class="input-group-addon">Current Playlist Id</span>
-        <input id="playlist-id" class="form-control" name='playid' value='' placeholder='Enter your existing ID or Create a new playlist'
-          type="text" />
-      </div>
-      </br>
-      <div class="input-group">
-        <span class="input-group-addon">Songs Year</span>
-        <input id="year" class="form-control" name="year" placeholder='year wise top songs' type="text" />
-      </div>
-      </br>
-      <div class="input-group">
-        <span class="input-group-addon">Video Id</span>
-        <input id="video-id" class="form-control" name='videoid' value='GZG9G5txtaE' type="text" />
-      </div>
-      </br>
-      <!-- <button type="button" class="btn btn-primary pull-right">Add to current playlist</button> -->
-      <input type="submit" value="Add to current playlist" onclick="addVideoToPlaylist()" id="addvideo">
-    </div>
-  </form>
-  <h2>Playlist: </h2>
-  <span id="playlist-title"></span>
-  <p id="playlist-description"></p>
-  <p id="playlist-Id"></p>
-  <div id="playlist-container">
-    <h5>
-      <span id="status">No Videos</span>
-    </h5>
-  </div>
-
-  <script src="../routing/htmlRoutes.js"></script> 
-  <script>
+console.log("I AM IN JS")
   var OAUTH2_CLIENT_ID = '144598218649-chvjjeteaa6239v3hou5soboqqjma9p2.apps.googleusercontent.com';
     var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
     console.log(OAUTH2_CLIENT_ID)
@@ -107,6 +36,7 @@
         // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
         // client flow. The current function is called when that flow completes.
         $('#login-link').click(function () {
+          alert("i am clicked");
           gapi.auth.authorize({
             client_id: OAUTH2_CLIENT_ID,
             scope: OAUTH2_SCOPES,
@@ -172,8 +102,7 @@
     // Add a video ID specified in the form to the playlist.
     var addVideoToPlaylist = function () {
       // getyoutubeids();
-      // alert("hey i reached")
-
+      alert("hey i reached")
       addToPlaylist($("#video-id").val());
     }
     // // Add a video to a playlist. The "startPos" and "endPos" values let you
@@ -228,14 +157,9 @@
         }, 3000);
       }
     }
-   var ids=$(youtubeids)
-  //  AJAX post the data to the friends API.
-    // $(youtubeids, function (data) {
-    //  console.log("seing wether i can acess youtube ids here")
-    //   console.log(data)
-    // });
-  </script>
-  <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
-</body>
+    // AJAX post the data to the friends API.
+    $.post("/", youtubeids, function (data) {
+      console.log("seing wether i can acess youtube ids here")
+      console.log(data)
 
-</html>
+    });

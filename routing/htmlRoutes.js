@@ -4,10 +4,14 @@
 // ===============================================================================
 var path = require("path");
 var SolrNode = require("solr-node");
+console.log("hey i am in routes")
 // ===============================================================================
 // ROUTING
 // ===============================================================================
+var youtubeids={
+  ids:[]};
 module.exports = function(app) {
+  
   // HTML GET Requests
   // Below code handles when users "visit" a page.
   // In each of the below cases the user is shown an HTML page of content
@@ -27,7 +31,7 @@ module.exports = function(app) {
       .sort({ viewcountRate: "desc" })
       .start(0)
       .rows(20);
-  var youtubeids=[];
+
     client.search(strQuery, function(err, result) {
       console.log("hey i am in solr");
       // console.log(result.responseHeader.status)
@@ -37,11 +41,13 @@ module.exports = function(app) {
       }
       var docs = result.response.docs;
       docs.forEach(element => {
-         youtubeids.push(element.youtubeId);
+         youtubeids.ids.push(element.youtubeId);
         // addToPlaylist(element.youtubeId);
+        // res.redirect("/")
       });
-   console.log(youtubeids)
-   res.json(youtubeids);
+      // module.exports = { ids: youtubeids };
+      // console.log(youtubeids)
+    res.json(youtubeids);
     });
   })
   app.get("/", function(req, res) {
