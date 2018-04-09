@@ -11,7 +11,7 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use("/static", express.static(path.join(__dirname, "app/public")));
 require("./routing/htmlRoutes")(app);
-require("./routing/apiRoutes")(app);
+// require("./routing/apiRoutes")(app);
 var PORT = process.env.PORT || 8080 ;
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);

@@ -5,7 +5,6 @@
   <title>Playlist Updates</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-
 </head>
 <style>
   body {
@@ -55,7 +54,8 @@
       </div>
       </br>
       <!-- <button type="button" class="btn btn-primary pull-right">Add to current playlist</button> -->
-      <input type="submit" value="Add to current playlist" onclick="addVideoToPlaylist()" id="addvideo">
+      <input type="button" value="Add to current playlist" onclick="addVideoToPlaylist()" id="addvideo">
+      <!--  -->
     </div>
   </form>
   <h2>Playlist: </h2>
@@ -67,8 +67,7 @@
       <span id="status">No Videos</span>
     </h5>
   </div>
-
-  <script src="../routing/htmlRoutes.js"></script> 
+  <!-- <script src="../routing/htmlRoutes.js"></script>  -->
   <script>
   var OAUTH2_CLIENT_ID = '144598218649-chvjjeteaa6239v3hou5soboqqjma9p2.apps.googleusercontent.com';
     var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
@@ -126,7 +125,6 @@
       });
     }
     var playlistId, channelId;
-    // console.log("ids:"+youtubeids);
     // After the API loads, call a function to enable the playlist creation form.
     function handleAPILoaded() {
       enableForm();
@@ -167,14 +165,24 @@
         }
       });
     }
-
     // var videoId=["ZG1Su0QwPYs","_JVghQCWnRI","Y-xZIECiTwk"]
     // Add a video ID specified in the form to the playlist.
     var addVideoToPlaylist = function () {
       // getyoutubeids();
-      // alert("hey i reached")
-
-      addToPlaylist($("#video-id").val());
+      var year=$("#year").val();
+      console.log(year)
+      var ids=[];   
+      // var currentURL = window.location.origin;
+      $.get("/"+year,function(data){
+       data.forEach(element => {
+        ids.push(element.youtubeId);
+      });
+      console.log(ids)
+      ids.forEach(function(id){
+        console.log(id)
+        addToPlaylist(id);
+      })
+    })
     }
     // // Add a video to a playlist. The "startPos" and "endPos" values let you
     // start and stop the video at specific times when the video is played as
@@ -228,12 +236,7 @@
         }, 3000);
       }
     }
-   var ids=$(youtubeids)
-  //  AJAX post the data to the friends API.
-    // $(youtubeids, function (data) {
-    //  console.log("seing wether i can acess youtube ids here")
-    //   console.log(data)
-    // });
+    
   </script>
   <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
 </body>
