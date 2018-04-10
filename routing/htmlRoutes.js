@@ -14,11 +14,11 @@ module.exports = function(app) {
       searchyear = req.params.year;
       console.log(searchyear)
       var client = new SolrNode({
-        host: "aurora.cs.rutgers.edu",
-        port: "8181",
-        core: "discogs_data_test",  
-        protocol: "http"
-      });
+  host: "aurora.cs.rutgers.edu",
+  port: "8181",
+  core: "discogs_data_test",  
+  protocol: "http"
+});
       var strQuery = client
       .query()
       .q({ releaseDate:searchyear })
